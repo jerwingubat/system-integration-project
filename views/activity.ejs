@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Integration Project - GitHub Activity</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <i class="fas fa-code"></i> System Integration
+            </a>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="/activity"><i class="fas fa-chart-line"></i> Activity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1><i class="fas fa-chart-line"></i> Recent GitHub Activity</h1>
+        
+        <div class="activity-list">
+            <ul>
+                <% repos.forEach(repo => { %>
+                    <li>
+                        <div class="activity-item">
+                            <div class="activity-content">
+                                <div class="repo-header">
+                                    <strong><i class="fas fa-repo"></i> <%= repo.name %></strong>
+                                    <% if (repo.author) { %>
+                                        <span class="repo-author">
+                                            <i class="fas fa-user"></i> <%= repo.author %>
+                                        </span>
+                                    <% } %>
+                                </div>
+                                <p class="repo-description"><%= repo.description || 'No description available' %></p>
+                                <div class="repo-meta">
+                                    <a href="<%= repo.html_url %>" target="_blank" class="repo-link">
+                                        <i class="fas fa-external-link-alt"></i> View Repository
+                                    </a>
+                                    <% if (repo.authorUsername) { %>
+                                        <a href="/profile/<%= repo.authorUsername %>" class="profile-link-small">
+                                            <i class="fas fa-user"></i> View Profile
+                                        </a>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="activity-stats">
+                                <small><i class="fas fa-calendar-alt"></i> <%= new Date(repo.updated_at).toLocaleDateString() %></small>
+                                <% if (repo.language) { %>
+                                    <br><small><i class="fas fa-code"></i> <%= repo.language %></small>
+                                <% } %>
+                                <% if (repo.stargazers_count > 0) { %>
+                                    <br><small><i class="fas fa-star"></i> <%= repo.stargazers_count %> stars</small>
+                                <% } %>
+                                <% if (repo.forks_count > 0) { %>
+                                    <br><small><i class="fas fa-code-branch"></i> <%= repo.forks_count %> forks</small>
+                                <% } %>
+                            </div>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

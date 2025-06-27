@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Integration Project - Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <i class="fas fa-code"></i> System Integration
+            </a>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="/activity"><i class="fas fa-chart-line"></i> Activity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1><i class="fas fa-rocket"></i> Welcome to My System Integration Project</h1>
+        
+        <!-- Main Portfolio Section -->
+        <div class="main-portfolio" id="mainPortfolio">
+            <h2 style="color: white; text-align: center; margin-bottom: 1rem;">
+                <i class="fas fa-star"></i> Featured Portfolio
+            </h2>
+            <div class="iframe-container">
+                <iframe src="<%= mainProfile.portfolio %>" width="100%" height="500px"></iframe>
+            </div>
+        </div>
+        
+        <!-- Multiple Profiles Grid -->
+        <div class="profiles-section">
+            <h2 style="color: white; text-align: center; margin: 3rem 0 2rem 0;">
+                <i class="fas fa-users"></i> Team Profiles
+            </h2>
+            
+            <div class="profiles-grid">
+                <% profiles.forEach(profile => { %>
+                    <% if (profile.githubData) { %>
+                        <div class="profile-card" data-portfolio="<%= profile.portfolio %>" data-name="<%= profile.name %>">
+                            <div class="profile-header">
+                                <img src="<%= profile.githubData.avatar_url %>" alt="<%= profile.name %> Avatar">
+                                <h3><i class="fab fa-github"></i> <%= profile.name %></h3>
+                                <p class="username">@<%= profile.username %></p>
+                            </div>
+                            
+                            <div class="profile-stats">
+                                <div class="stat">
+                                    <i class="fas fa-folder-open"></i>
+                                    <span><%= profile.githubData.public_repos %></span>
+                                    <small>Repos</small>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span><%= profile.githubData.followers %></span>
+                                    <small>Followers</small>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-eye"></i>
+                                    <span><%= profile.githubData.following %></span>
+                                    <small>Following</small>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-info">
+                                <% if (profile.githubData.location) { %>
+                                    <p><i class="fas fa-map-marker-alt"></i> <%= profile.githubData.location %></p>
+                                <% } %>
+                                <% if (profile.githubData.company) { %>
+                                    <p><i class="fas fa-building"></i> <%= profile.githubData.company %></p>
+                                <% } %>
+                                <% if (profile.githubData.bio) { %>
+                                    <p><i class="fas fa-info-circle"></i> <%= profile.githubData.bio %></p>
+                                <% } %>
+                            </div>
+                            
+                            <div class="profile-actions">
+                                <a href="/profile/<%= profile.username %>" class="profile-link">
+                                    <i class="fas fa-user"></i> View Profile
+                                </a>
+                                <a href="<%= profile.githubData.html_url %>" target="_blank" class="profile-link">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                                <% if (profile.portfolio) { %>
+                                    <button class="profile-link portfolio-btn" onclick="showPortfolio('<%= profile.portfolio %>', '<%= profile.name %>')">
+                                        <i class="fas fa-globe"></i> View Portfolio
+                                    </button>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } %>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal -->
+    <div id="portfolioModal" class="portfolio-modal">
+        <div class="portfolio-modal-content">
+            <div class="portfolio-modal-header">
+                <h2 id="portfolioTitle"><i class="fas fa-globe"></i> Portfolio</h2>
+                <button class="close-btn" onclick="closePortfolio()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="portfolio-modal-body">
+                <iframe id="portfolioIframe" src="" width="100%" height="600px"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to show portfolio in modal
+        function showPortfolio(portfolioUrl, profileName) {
+            const modal = document.getElementById('portfolioModal');
+            const iframe = document.getElementById('portfolioIframe');
+            const title = document.getElementById('portfolioTitle');
+            
+            // Update modal content
+            title.innerHTML = `<i class="fas fa-globe"></i> ${profileName}'s Portfolio`;
+            iframe.src = portfolioUrl;
+            
+            // Show modal
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            
+            // Add animation class
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+        
+        // Function to close portfolio modal
+        function closePortfolio() {
+            const modal = document.getElementById('portfolioModal');
+            const iframe = document.getElementById('portfolioIframe');
+            
+            // Remove animation class
+            modal.classList.remove('show');
+            
+            // Hide modal after animation
+            setTimeout(() => {
+                modal.style.display = 'none';
+                iframe.src = ''; // Clear iframe source
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }, 300);
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('portfolioModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePortfolio();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePortfolio();
+            }
+        });
+        
+        // Add click event to profile cards for portfolio viewing
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileCards = document.querySelectorAll('.profile-card');
+            
+            profileCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on links or buttons
+                    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
+                        return;
+                    }
+                    
+                    const portfolioUrl = this.getAttribute('data-portfolio');
+                    const profileName = this.getAttribute('data-name');
+                    
+                    if (portfolioUrl) {
+                        showPortfolio(portfolioUrl, profileName);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

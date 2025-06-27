@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= profile.name %> - System Integration Project</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <i class="fas fa-code"></i> System Integration
+            </a>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="/activity"><i class="fas fa-chart-line"></i> Activity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="profile-detail">
+            <!-- Profile Header -->
+            <div class="profile-detail-header">
+                <div class="profile-detail-avatar">
+                    <img src="<%= profile.githubData.avatar_url %>" alt="<%= profile.name %> Avatar">
+                </div>
+                <div class="profile-detail-info">
+                    <h1><i class="fab fa-github"></i> <%= profile.name %></h1>
+                    <p class="username">@<%= profile.username %></p>
+                    <% if (profile.githubData.bio) { %>
+                        <p class="bio"><%= profile.githubData.bio %></p>
+                    <% } %>
+                    <div class="profile-detail-stats">
+                        <div class="stat">
+                            <i class="fas fa-folder-open"></i>
+                            <span><%= profile.githubData.public_repos %></span>
+                            <small>Repositories</small>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span><%= profile.githubData.followers %></span>
+                            <small>Followers</small>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-eye"></i>
+                            <span><%= profile.githubData.following %></span>
+                            <small>Following</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Details -->
+            <div class="profile-detail-meta">
+                <% if (profile.githubData.location) { %>
+                    <div class="meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><%= profile.githubData.location %></span>
+                    </div>
+                <% } %>
+                <% if (profile.githubData.company) { %>
+                    <div class="meta-item">
+                        <i class="fas fa-building"></i>
+                        <span><%= profile.githubData.company %></span>
+                    </div>
+                <% } %>
+                <% if (profile.githubData.blog) { %>
+                    <div class="meta-item">
+                        <i class="fas fa-globe"></i>
+                        <a href="<%= profile.githubData.blog %>" target="_blank"><%= profile.githubData.blog %></a>
+                    </div>
+                <% } %>
+                <% if (profile.githubData.twitter_username) { %>
+                    <div class="meta-item">
+                        <i class="fab fa-twitter"></i>
+                        <a href="https://twitter.com/<%= profile.githubData.twitter_username %>" target="_blank">@<%= profile.githubData.twitter_username %></a>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Portfolio Section -->
+            <% if (profile.portfolio) { %>
+                <div class="portfolio-section">
+                    <h2><i class="fas fa-globe"></i> Portfolio</h2>
+                    <div class="iframe-container">
+                        <iframe src="<%= profile.portfolio %>" width="100%" height="500px"></iframe>
+                    </div>
+                </div>
+            <% } %>
+
+            <!-- Recent Repositories -->
+            <div class="repositories-section">
+                <h2><i class="fas fa-repo"></i> Recent Repositories</h2>
+                <div class="repositories-grid">
+                    <% repos.forEach(repo => { %>
+                        <div class="repository-card">
+                            <div class="repo-header">
+                                <h3><i class="fas fa-folder"></i> <%= repo.name %></h3>
+                                <% if (repo.private) { %>
+                                    <span class="repo-badge private">Private</span>
+                                <% } else { %>
+                                    <span class="repo-badge public">Public</span>
+                                <% } %>
+                            </div>
+                            <p class="repo-description"><%= repo.description || 'No description available' %></p>
+                            <div class="repo-stats">
+                                <% if (repo.language) { %>
+                                    <span class="repo-stat">
+                                        <i class="fas fa-code"></i> <%= repo.language %>
+                                    </span>
+                                <% } %>
+                                <% if (repo.stargazers_count > 0) { %>
+                                    <span class="repo-stat">
+                                        <i class="fas fa-star"></i> <%= repo.stargazers_count %>
+                                    </span>
+                                <% } %>
+                                <% if (repo.forks_count > 0) { %>
+                                    <span class="repo-stat">
+                                        <i class="fas fa-code-branch"></i> <%= repo.forks_count %>
+                                    </span>
+                                <% } %>
+                            </div>
+                            <div class="repo-actions">
+                                <a href="<%= repo.html_url %>" target="_blank" class="repo-link">
+                                    <i class="fab fa-github"></i> View Repository
+                                </a>
+                                <% if (repo.homepage) { %>
+                                    <a href="<%= repo.homepage %>" target="_blank" class="repo-link">
+                                        <i class="fas fa-external-link-alt"></i> Live Demo
+                                    </a>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+
+            <!-- External Links -->
+            <div class="external-links">
+                <a href="<%= profile.githubData.html_url %>" target="_blank" class="external-link">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                <% if (profile.portfolio) { %>
+                    <a href="<%= profile.portfolio %>" target="_blank" class="external-link">
+                        <i class="fas fa-globe"></i> Visit Portfolio
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

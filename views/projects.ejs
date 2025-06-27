@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Integration Project - Projects</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <i class="fas fa-code"></i> System Integration
+            </a>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="/activity"><i class="fas fa-chart-line"></i> Activity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1><i class="fas fa-project-diagram"></i> Our Projects</h1>
+        
+        <div class="projects">
+            <% projects.forEach(project => { %>
+                <div class="project-card">
+                    <img src="<%= project.image %>" alt="<%= project.name %>" onerror="this.src='https://via.placeholder.com/300x200/667eea/ffffff?text=Project+Image'">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3><i class="fas fa-folder"></i> <%= project.name %></h3>
+                            <span class="project-author">
+                                <i class="fas fa-user"></i> <%= project.author %>
+                            </span>
+                        </div>
+                        <p><%= project.description %></p>
+                        <div class="project-actions">
+                            <a href="<%= project.link %>" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> View Repository
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
