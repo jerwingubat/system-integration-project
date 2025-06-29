@@ -78,24 +78,24 @@ app.get('/', async (req, res) => {
 app.get('/projects', (req, res) => {
     const projects = [
         {
-            name: "Smart Portfolio",
-            description: "A portfolio with 3D interactivity and animations.",
-            image: "/images/portfolio.png",
-            link: "https://github.com/jerwingubat/smart-portfolio",
+            name: "Sweetrack App",
+            description: "A food recognition Android app that identifies food items, estimates calorie and sugar content, and helps users manage their intake based on health conditions.",
+            image: "/images/sweetrack.jpg",
+            link: "https://github.com/jerwingubat/SweeTrack-App",
             author: "Jerwin Gubat"
         },
         {
-            name: "Clinic Management System",
-            description: "Manages patient records and appointments.",
-            image: "/images/clinic.png",
-            link: "https://github.com/jerwingubat/clinic-system",
+            name: "Face Recognition using FaceNet",
+            description: "This project implements a face recognition system using the MTCNN (Multi-task Cascaded Convolutional Neural Networks) for face detection and InceptionResnetV1 for generating face embeddings.",
+            image: "/images/facenet.png",
+            link: "https://github.com/jerwingubat/FaceNet-FaceRecognition",
             author: "Jerwin Gubat"
         },
         {
-            name: "Booking System",
-            description: "Department booking with calendar and slot features.",
-            image: "/images/booking.png",
-            link: "https://github.com/jerwingubat/booking-system",
+            name: "Machine Learning Algorithms",
+            description: "Clear, modular Python implementations of fundamental machine learning algorithms for educational purposes. Ideal for learners who want to understand the math and logic behind popular ML techniques without relying on high-level libraries.",
+            image: "/images/machineLearning.PNG",
+            link: "https://github.com/jerwingubat/Machine-Learning-Algorithms",
             author: "Jerwin Gubat"
         },
         {
