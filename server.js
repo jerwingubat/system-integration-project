@@ -63,7 +63,7 @@ app.get('/', async (req, res) => {
 
         res.render('index', { 
             profiles: profilesData,
-            mainProfile: profilesData[0] // First profile as main
+            mainProfile: profilesData[0]
         });
     } catch (error) {
         console.error("Error:", error);
