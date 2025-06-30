@@ -21,12 +21,9 @@
             </ul>
         </div>
     </nav>
-
-    <!-- Main Content -->
     <div class="container">
         <h1><i class="fas fa-rocket"></i>System Integration Project</h1>
         
-        <!-- Main Portfolio Section -->
         <div class="main-portfolio" id="mainPortfolio">
             <h2 style="color: white; text-align: center; margin-bottom: 1rem;">
                 <i class="fas fa-star"></i> Featured Portfolio
@@ -36,7 +33,7 @@
             </div>
         </div>
         
-        <!-- Multiple Profiles Grid -->
+        
         <div class="profiles-section">
             <h2 style="color: white; text-align: center; margin: 3rem 0 2rem 0;">
                 <i class="fas fa-users"></i> Team Profiles
@@ -118,63 +115,51 @@
     </div>
 
     <script>
-        // Function to show portfolio in modal
         function showPortfolio(portfolioUrl, profileName) {
             const modal = document.getElementById('portfolioModal');
             const iframe = document.getElementById('portfolioIframe');
             const title = document.getElementById('portfolioTitle');
             
-            // Update modal content
             title.innerHTML = `<i class="fas fa-globe"></i> ${profileName}'s Portfolio`;
             iframe.src = portfolioUrl;
             
-            // Show modal
             modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
             
-            // Add animation class
             setTimeout(() => {
                 modal.classList.add('show');
             }, 10);
         }
         
-        // Function to close portfolio modal
         function closePortfolio() {
             const modal = document.getElementById('portfolioModal');
             const iframe = document.getElementById('portfolioIframe');
             
-            // Remove animation class
-            modal.classList.remove('show');
-            
-            // Hide modal after animation
+           
+            modal.classList.remove('show');            
             setTimeout(() => {
                 modal.style.display = 'none';
-                iframe.src = ''; // Clear iframe source
-                document.body.style.overflow = 'auto'; // Restore scrolling
+                iframe.src = '';
+                document.body.style.overflow = 'auto'; 
             }, 300);
         }
         
-        // Close modal when clicking outside
         document.getElementById('portfolioModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closePortfolio();
             }
         });
-        
-        // Close modal with Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closePortfolio();
             }
         });
         
-        // Add click event to profile cards for portfolio viewing
         document.addEventListener('DOMContentLoaded', function() {
             const profileCards = document.querySelectorAll('.profile-card');
             
             profileCards.forEach(card => {
                 card.addEventListener('click', function(e) {
-                    // Don't trigger if clicking on links or buttons
                     if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
                         return;
                     }

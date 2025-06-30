@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3000;
 const GITHUB_USER = process.env.GITHUB_USER;
 console.log("Loaded GitHub Username:", GITHUB_USER); 
 
-// Multiple GitHub profiles configuration
 const GITHUB_PROFILES = [
     {
         username: GITHUB_USER,
@@ -16,12 +15,12 @@ const GITHUB_PROFILES = [
         portfolio: "https://jerwingubatportfolio.vercel.app"
     },
     {
-        username: "octocat", // Example second profile
+        username: "octocat",
         name: "Octocat",
         portfolio: "https://octocat.github.io"
     },
     {
-        username: "torvalds", // Example third profile
+        username: "torvalds",
         name: "Linus Torvalds",
         portfolio: "https://github.com/torvalds"
     }
@@ -30,7 +29,6 @@ const GITHUB_PROFILES = [
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Helper function to fetch GitHub profile
 async function fetchGitHubProfile(username) {
     try {
         const response = await axios.get(`https://api.github.com/users/${username}`);
@@ -41,7 +39,6 @@ async function fetchGitHubProfile(username) {
     }
 }
 
-// Helper function to fetch GitHub repositories
 async function fetchGitHubRepos(username) {
     try {
         const response = await axios.get(`https://api.github.com/users/${username}/repos?sort=updated`);
@@ -54,7 +51,6 @@ async function fetchGitHubRepos(username) {
 
 app.get('/', async (req, res) => {
     try {
-        // Fetch all profiles
         const profilesData = await Promise.all(
             GITHUB_PROFILES.map(async (profile) => {
                 const githubData = await fetchGitHubProfile(profile.username);
@@ -118,7 +114,6 @@ app.get('/projects', (req, res) => {
 
 app.get('/activity', async (req, res) => {
     try {
-        // Fetch repositories from all profiles
         const allRepos = [];
         
         for (const profile of GITHUB_PROFILES) {
@@ -131,7 +126,6 @@ app.get('/activity', async (req, res) => {
             allRepos.push(...reposWithAuthor);
         }
 
-        // Sort by update date and take top 10
         const sortedRepos = allRepos
             .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
             .slice(0, 10);
@@ -143,7 +137,6 @@ app.get('/activity', async (req, res) => {
     }
 });
 
-// New route for individual profile view
 app.get('/profile/:username', async (req, res) => {
     try {
         const { username } = req.params;
